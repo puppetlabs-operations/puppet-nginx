@@ -32,7 +32,7 @@ server {
   # don't get strange v4 mapped IPs in v6.
   listen   [::]:<%= ssl_port %><% if isdefaultvhost == true %> default ssl ipv6only=on<% end %>;
 <%   end -%>
-  ssl_certificate      <%= ssl_path %>/certs/pl.cert;
+  ssl_certificate      <%= ssl_path %>/certs/pl_chain.cert;
   ssl_certificate_key  <%= ssl_path %>/private/pl.key;
   ssl_ciphers          ALL:!aNULL:!ADH:!eNULL:!MEDIUM:!LOW:!EXP:RC4:RSA:HIGH:!kEDH;  # use decent and non-crap ciphers.
   ssl_session_timeout  10m;
