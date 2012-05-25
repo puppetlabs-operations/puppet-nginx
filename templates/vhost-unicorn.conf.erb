@@ -116,7 +116,7 @@ server {
     # Crazed auth section:
 <% if auth['allowfrom'] != nil -%>
   satisfy any;
-  <% auth['allowfrom'].split(',').each do |allowip| -%>
+  <% auth['allowfrom'].split(',').reject {|i| i.empty?}.each do |allowip| -%>
   allow <%= allowip %>;
   <% end -%>
 <% end -%>
