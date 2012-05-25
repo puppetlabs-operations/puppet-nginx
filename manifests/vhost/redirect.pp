@@ -29,8 +29,8 @@ define nginx::vhost::redirect (
   }
 
   if $ssl == true {
-    include puppetlabs_ssl
-    $ssl_path = $puppetlabs_ssl::params::ssl_path
+    include ssl::params
+    $ssl_path = $ssl::params::ssl_path
   }
 
   # Need to make some variable names so the templates can use them!
