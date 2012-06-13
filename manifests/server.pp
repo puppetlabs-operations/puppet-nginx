@@ -27,7 +27,7 @@ class nginx::server {
     # Debian uses logrotate, other things use other things.
     file{ '/etc/logrotate.d/nginx':
       ensure  => file,
-      content => 'puppet:///modules/nginx/debian_logrotate',
+      source  => 'puppet:///modules/nginx/debian_logrotate',
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
