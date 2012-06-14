@@ -24,13 +24,18 @@ class nginx::server {
         priority => '1001'
     }
 
+    # Pull in package xz if we haven't already.
+    # See dist/packages/manifests/archive.pp
+    Package <| alias == 'xz' |>
+
     # Debian uses logrotate, other things use other things.
     file{ '/etc/logrotate.d/nginx':
       ensure  => file,
-      source  => 'puppet:///modules/nginx/debian_logrotate',
+      content => template( 'nginx/debian_logrotate.erb' ),
       mode    => '0644',
       owner   => 'root',
       group   => 'root',
+      require => Package['xz'],
     }
   }
 

@@ -4,7 +4,7 @@
 	rotate 52
 	compress
 	delaycompress
-  compresscmd xz
+  compresscmd <%= scope.lookupvar( 'packages::archive::xzpath' ) %>
 	notifempty
 	create 0640 www-data adm
 	sharedscripts
