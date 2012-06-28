@@ -26,14 +26,13 @@ define nginx::vhost(
     $srvname = $servername
   }
 
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => 'root',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
   # liberally borrowed from apache module.
