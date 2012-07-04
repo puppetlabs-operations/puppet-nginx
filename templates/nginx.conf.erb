@@ -2,7 +2,7 @@
 #
 
 user www-data;
-worker_processes <%= processorcount %>;
+worker_processes <%= threadcount %>;
 pid /var/run/nginx.pid;
 
 events {

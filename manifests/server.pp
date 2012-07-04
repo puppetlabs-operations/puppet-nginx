@@ -6,7 +6,10 @@
 #
 # Debian/ubuntu at present.
 #
-class nginx::server {
+class nginx::server (
+  $threadcount = $nginx::params::threadcount
+) inherits nginx::params {
+
   include nginx
 
   # We assume for our modules, we have the motd module, & use it.
@@ -17,9 +20,10 @@ class nginx::server {
     name   => $nginx::params::package,
   }
 
+  if $operatingsystem == "FreeBSD" { Package { provider => pkgng } }
+
   if $operatingsystem == 'Debian' {
-    apt::pin{
-      'nginx':
+    apt::pin{ 'nginx':
         release  => 'squeeze-backports',
         priority => '1001'
     }
