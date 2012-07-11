@@ -29,7 +29,7 @@ define nginx::vhost(
   file { "${nginx::params::vdir}/${priority}-${name}":
     content => template($template),
     owner   => 'root',
-    group   => 'root',
+    group   => '0',
     mode    => '755',
     require => Package['nginx'],
     notify  => Service['nginx'],

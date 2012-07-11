@@ -43,7 +43,7 @@ class nginx::cache (
     "${nginx::params::vdir}/${priority}-${upstream_server}_caching":
       content => template($template),
       owner   => 'root',
-      group   => 'root',
+      group   => '0',
       mode    => '755',
       require => Package['nginx'],
       notify  => Service['nginx'],
