@@ -46,7 +46,7 @@ server {
 
   server_name <%= srvname %><% if has_variable?( 'serveralias' )%> <%= serveraliases %><% end %>;
 
-  root <%= rootpath %>/public;
+  root <%= rootpath %><% if gunicorn != true %>/public<% end %>;
 
   access_log  /var/log/nginx/<%= srvname %>.access.log;
   error_log   /var/log/nginx/<%= srvname %>.error.log;
@@ -131,9 +131,15 @@ server {
   # Rails error pages
   error_page 500 502 503 504 /500.html;
   location = /500.html {
-    root <%= rootpath %>/public;
+    root <%= rootpath %><% if gunicorn != true %>/public<% end %>;
   }
 
+<% unless aliases.empty? -%>
+  # equivilent of Alias /foo /bar/plop in apache
+<%   aliases.each do |a,path| -%>
+  location <%= a %> { root <%= path %>; }
+<%   end -%>
+<% end -%>
 
   # Anything here is added by use of "magic" so is pretty jazzy.
   <%= magic %>

@@ -21,7 +21,9 @@ define nginx::unicorn(
   $ssl_port       = 443,
   $sslonly        = false,
   $serveraliases  = undef,
-  $isdefaultvhost = false
+  $isdefaultvhost = false,
+  $aliases        = {},
+  $gunicorn       = false
   ) {
 
   include nginx
@@ -33,7 +35,7 @@ define nginx::unicorn(
   }
 
   if $path == '' {
-    $rootpath = "/var/www/$srvname"
+    $rootpath = "/var/www/${srvname}"
   } else {
     $rootpath = $path
   }
@@ -68,17 +70,17 @@ define nginx::unicorn(
       content => template($template),
       owner   => 'root',
       group   => '0',
-      mode    => '755',
+      mode    => '0755',
       require => Package['nginx'],
       notify  => Service['nginx'],
   }
 
   # liberally borrowed from apache module.
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
+  if ! defined(Firewall["0100-INPUT ACCEPT ${port}"]) {
     @firewall {
-      "0100-INPUT ACCEPT $port":
+      "0100-INPUT ACCEPT ${port}":
         jump  => 'ACCEPT',
-        dport => "$port",
+        dport => $port,
         proto => 'tcp'
     }
   }
