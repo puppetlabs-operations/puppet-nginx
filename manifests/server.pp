@@ -25,7 +25,8 @@ class nginx::server (
   if $operatingsystem == 'Debian' {
     apt::pin{ 'nginx':
         release  => 'squeeze-backports',
-        priority => '1001'
+        priority => '1001',
+        before   => Package['nginx'],
     }
 
     # Pull in package xz if we haven't already.
