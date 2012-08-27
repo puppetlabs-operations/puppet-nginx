@@ -26,17 +26,23 @@ class nginx::params {
         $threadcount    = $processorcount
         $phpfpm_service = 'php5-fpm'
         $fastcgi_params = '/etc/nginx/fastcgi_params'
+        $user           = 'www-data'
+        $confdir        = '/etc/nginx'
       }
     'freebsd': {
-        $package    = 'nginx'
-        $service    = 'nginx'
-        $restart    = '/usr/sbin/service nginx reload'
-        $hasrestart = true
-        $hasstatus  = true
-        $etcdir     = '/usr/local/etc/nginx'
-        $vdir       = "${etcdir}/sites-enabled"
-        $confd      = "${etcdir}/conf.d"
+        $package     = 'nginx'
+        $service     = 'nginx'
+        $restart     = '/usr/sbin/service nginx reload'
+        $hasrestart  = true
+        $hasstatus   = true
+        $etcdir      = '/usr/local/etc/nginx'
+        $vdir        = "${etcdir}/sites-enabled"
+        $confd       = "${etcdir}/conf.d"
         $threadcount = '4'
+        $user        = 'www'
+
+        $confdir     = '/usr/local/etc/nginx'
+
       }
     default: {
         warning( "Sorry, nginx module isn't built for ${operatingsystem} yet." )
