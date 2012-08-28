@@ -15,15 +15,17 @@ class nginx::params {
   case $operatingsystem {
     'debian',
     'ubuntu': {
-        $package     = 'nginx'
-        $service     = 'nginx'
-        $restart     = '/usr/sbin/nginx -t && /etc/init.d/nginx reload'
-        $hasrestart  = true
-        $hasstatus   = true
-        $etcdir      = '/etc/nginx'
-        $vdir        = "${etcdir}/sites-enabled"
-        $confd       = "${etcdir}/conf.d"
-        $threadcount = $processorcount
+        $package        = 'nginx'
+        $service        = 'nginx'
+        $restart        = '/usr/sbin/nginx -t && /etc/init.d/nginx reload'
+        $hasrestart     = true
+        $hasstatus      = true
+        $etcdir         = '/etc/nginx'
+        $vdir           = "${etcdir}/sites-enabled"
+        $confd          = "${etcdir}/conf.d"
+        $threadcount    = $processorcount
+        $phpfpm_service = 'php5-fpm'
+        $fastcgi_params = '/etc/nginx/fastcgi_params'
       }
     'freebsd': {
         $package    = 'nginx'

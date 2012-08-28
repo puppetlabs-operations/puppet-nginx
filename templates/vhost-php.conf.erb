@@ -1,0 +1,96 @@
+# This vhost is managed by puppet, do not mess with it, terrible terrible things
+# will happen.
+#
+#
+# May be lifted from http://unicorn.bogomips.org/examples/nginx.conf
+
+# this can be any application server, not just Unicorn/Rainbows!
+
+server {
+
+<% if sslonly != true -%>
+  listen   <%= port %><% if isdefaultvhost == true %> default<% end %>; ## listen for ipv4, sorry no IPv6 for now.
+<%   if has_variable?( 'ipaddress6' ) -%>
+  # Listen on an ipv6 version of this port too, but only do v6 on it, so we
+  # don't get strange v4 mapped IPs in v6.
+  listen   [::]:<%= port %><% if isdefaultvhost == true %> default ipv6only=on<% end %>;
+<%   end -%>
+<% end -%>
+
+<% if ssl == true -%>
+  # Do SSL, and don't do it terribly.  
+  listen    <%= ssl_port %><% if isdefaultvhost == true %> default ssl<% end %>;
+<%   if has_variable?( 'ipaddress6' ) -%>
+  # Listen on an ipv6 version of this port too, but only do v6 on it, so we
+  # don't get strange v4 mapped IPs in v6.
+  listen   [::]:<%= ssl_port %><% if isdefaultvhost == true %> default ssl ipv6only=on<% end %>;
+<%   end -%>
+  ssl_certificate      <%= ssl_path %>/certs/pl_chain.cert;
+  ssl_certificate_key  <%= ssl_path %>/private/pl.key;
+  ssl_ciphers          ALL:!aNULL:!ADH:!eNULL:!MEDIUM:!LOW:!EXP:RC4:RSA:HIGH:!kEDH;  # use decent and non-crap ciphers.
+  ssl_session_timeout  10m;
+  ssl_protocols        TLSv1 SSLv3;
+  ssl_session_cache    shared:SSL_<%= appname %>:1m;
+
+  # Redirect non-SSL on SSL port to SSL..
+  # http://www.ruby-forum.com/topic/193781#844520
+  error_page  497  https://$host$request_uri;
+<% end -%>
+
+  server_name <%= srvname %><% if has_variable?( 'serveralias' )%> <%= serveraliases %><% end %>;
+
+  index index.php index.html;
+
+  root <%= rootpath %>;
+
+  location ~ .*\.php$
+  { 
+    #This next line fixes possible security issues, requires that the fpm is on the same server. http://library.linode.com/web-servers/nginx/php-fastcgi/debian-6-squeeze#sph_important-security-considerations
+    try_files $uri =404;
+
+    include <%= scope.lookupvar('nginx::params::fastcgi_params') %>;
+    fastcgi_pass <%= fpm_upstream %>;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass_header Host;
+    fastcgi_pass_header X-Real-IP;
+    fastcgi_pass_header X-Forwarded-For;
+  }
+
+  access_log  /var/log/nginx/<%= srvname %>.access.log;
+  error_log   /var/log/nginx/<%= srvname %>.error.log;
+
+
+  # tcp_nopush on; # off may be better for *some* Comet/long-poll stuff
+  # tcp_nodelay off; # on may be better for some Comet/long-poll stuff
+
+  # we haven't checked to see if Rack::Deflate on the app server is
+  # faster or not than doing compression via nginx.  It's easier
+  # to configure it all in one place here for static files and also
+  # to disable gzip for clients who don't get gzip/deflate right.
+  # There are other other gzip settings that may be needed used to deal with
+  # bad clients out there, see http://wiki.nginx.org/NginxHttpGzipModule
+  gzip on;
+  gzip_http_version 1.0;
+  gzip_proxied any;
+  gzip_min_length 500;
+  gzip_disable "MSIE [1-6]\.";
+  gzip_types text/plain text/xml text/css
+             text/comma-separated-values
+             text/javascript application/x-javascript
+             application/atom+xml;
+
+
+  client_max_body_size 128m;
+
+<% unless aliases.empty? -%>
+  # equivilent of Alias /foo /bar/plop in apache
+<%   aliases.each do |a,path| -%>
+  location <%= a %> { root <%= path %>; }
+<%   end -%>
+<% end -%>
+
+  # Anything here is added by use of "magic" so is pretty jazzy.
+  <%= magic %>
+}
+
