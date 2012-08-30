@@ -1,0 +1,30 @@
+# This vhost is managed by puppet, do not mess with it, terrible terrible things
+# will happen.
+#
+
+server {
+
+  listen   <%= port %><% if isdefaultvhost == true %> default<% end %> ; ## listen for ipv4
+<% if has_variable?( 'ipaddress6' ) -%>
+  # Listen on an ipv6 version of this port too, but only do v6 on it, so we
+  # don't get strange v4 mapped IPs in v6.
+  listen   [::]:<%= port %><% if isdefaultvhost == true %> default ipv6only=on<% end %>;
+<% end -%>
+
+  server_name <%= srvname %> ;
+
+  access_log  /var/log/nginx/<%= srvname %>.access.log;
+
+  #location / {
+  #  root   /var/www/<%= srvname %>;
+  #  index  index.html index.htm;
+  #}
+  
+  location ~ ^/~(.+?)(/.*)?$ {
+    alias <%= homedir %>/$1/<%= pubdir %>$2;
+  }
+
+  # Anything here is added by use of "magic" so is pretty jazzy.
+  <%= magic %>
+}
+
