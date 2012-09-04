@@ -27,6 +27,11 @@ define nginx::php(
 
   include nginx
 
+  if $operatingsystem != 'Debian' {
+    err("Nginx php only works on debian currently.")
+    fail("Nginx php need debian.")
+  }
+  
   apt::source { "dotdeb":
     location    => "http://packages.dotdeb.org",
     repos       => 'all',
