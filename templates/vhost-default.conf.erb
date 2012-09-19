@@ -11,9 +11,10 @@ server {
   listen   [::]:<%= port %><% if isdefaultvhost == true %> default ipv6only=on<% end %>;
 <% end -%>
 
-  server_name <%= srvname %> ;
+  server_name <%= srvname %><% if has_variable?( 'serveraliases' )%> <%= serveraliases %><% end %>;
 
   access_log  /var/log/nginx/<%= srvname %>.access.log;
+
 
   location / {
     root   /var/www/<%= srvname %>;

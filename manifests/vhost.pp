@@ -14,6 +14,7 @@ define nginx::vhost(
   $template       = 'nginx/vhost-default.conf.erb',
   $servername     = '',
   $magic          = '',
+  $serveraliases  = undef,
   $isdefaultvhost = false
   ) {
 
