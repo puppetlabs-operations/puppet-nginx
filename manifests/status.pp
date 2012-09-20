@@ -1,7 +1,9 @@
-class nginx::status( $monitorport = '70' ) {
+class nginx::status($monitorport = '70') {
 
   nginx::vhost { "status":
-    template => "nginx/vhost-status.conf.erb"
+    template         => "nginx/vhost-status.conf.erb",
+    template_options => {
+      'monitorport'  => $monitorport,
+    },
   }
-
 }

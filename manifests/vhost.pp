@@ -8,14 +8,15 @@
 #   include nginx::server
 #
 define nginx::vhost(
-  $port           = '80',
+  $port             = '80',
   #$dest,
-  $priority       = '10',
-  $template       = 'nginx/vhost-default.conf.erb',
-  $servername     = '',
-  $magic          = '',
-  $serveraliases  = undef,
-  $isdefaultvhost = false
+  $priority         = '10',
+  $template         = 'nginx/vhost-default.conf.erb',
+  $servername       = '',
+  $magic            = '',
+  $serveraliases    = undef,
+  $template_options = {},
+  $isdefaultvhost   = false
   ) {
 
   include nginx
