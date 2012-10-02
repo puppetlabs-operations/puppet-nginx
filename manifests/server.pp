@@ -20,7 +20,9 @@ class nginx::server (
     name   => $nginx::params::package,
   }
 
-  if $operatingsystem == "FreeBSD" { Package { provider => pkgng } }
+  if $operatingsystem == "FreeBSD" { 
+    Package { provider => pkgng } 
+  }
 
   if $operatingsystem == 'Debian' {
     apt::pin{ 'nginx':
