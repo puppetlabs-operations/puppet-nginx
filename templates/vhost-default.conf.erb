@@ -15,10 +15,13 @@ server {
 
   access_log  /var/log/nginx/<%= srvname %>.access.log;
 
-
   location / {
-    root   /var/www/<%= srvname %>;
+    root   <%= docroot %>;
+<% if autoindex -%>
+    autoindex on;
+<% else -%>
     index  index.html index.htm;
+<% end -%>
   }
 
   # Anything here is added by use of "magic" so is pretty jazzy.

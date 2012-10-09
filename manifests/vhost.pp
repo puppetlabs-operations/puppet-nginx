@@ -16,18 +16,29 @@ define nginx::vhost(
   $magic            = '',
   $serveraliases    = undef,
   $template_options = {},
-  $isdefaultvhost   = false
+  $isdefaultvhost   = false,
+  $vhostroot        = '',
+  $autoindex        = false
   ) {
 
   include nginx
   include nginx::server
 
+  # Determine the name of the vhost
   if $servername == '' {
     $srvname = $name
   } else {
     $srvname = $servername
   }
 
+  # The location to put the root of this vhost
+  if $vhostroot == '' {
+    $docroot = "/var/www/${srvname}"
+  } else {
+    $docroot = $vhostroot
+  }
+
+  # Drop the nginx configuration
   file { "${nginx::params::vdir}/${priority}-${name}":
     content => template($template),
     owner   => 'root',
