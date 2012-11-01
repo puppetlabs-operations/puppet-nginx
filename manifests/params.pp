@@ -12,6 +12,8 @@
 #
 class nginx::params {
 
+  $server_names_hash_bucket_size = 32
+
   case $operatingsystem {
     'debian',
     'ubuntu': {
