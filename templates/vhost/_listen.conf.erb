@@ -1,5 +1,5 @@
 <%# Configuration fragment for listening on IPv4 and IPv6 with SSL %>
-<% unless sslonly -%>
+<% unless @sslonly -%>
   listen   <%= port %><%= " default" if isdefaultvhost %>;
 <%   if has_variable?( 'ipaddress6' ) -%>
   # Listen on an ipv6 version of this port too, but only do v6 on it, so we
