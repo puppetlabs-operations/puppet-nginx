@@ -16,6 +16,7 @@
   # don't get strange v4 mapped IPs in v6.
   listen   [::]:<%= ssl_port %><%= " default" if isdefaultvhost %> ipv6only=on ssl;
 <%   end -%>
+
   ssl_certificate      <%= ssl_path %>/certs/pl_chain.cert;
   ssl_certificate_key  <%= ssl_path %>/private/pl.key;
   ssl_ciphers          ALL:!aNULL:!ADH:!eNULL:!MEDIUM:!LOW:!EXP:RC4:RSA:HIGH:!kEDH;  # use decent and non-crap ciphers.
