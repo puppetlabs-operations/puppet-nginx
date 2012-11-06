@@ -2,19 +2,20 @@
 <% unless @sslonly -%>
   listen   <%= port %><%= " default" if isdefaultvhost %>;
 <%   if has_variable?( 'ipaddress6' ) -%>
-  # Listen on an ipv6 version of this port too, but only do v6 on it, so we
-  # don't get strange v4 mapped IPs in v6.
-  listen   [::]:<%= port %><%= " default" if isdefaultvhost %> ipv6only=on;
+<%# Listen on an ipv6 version of this port too, but only do v6 on it, so we %>
+<%# don't get strange v4 mapped IPs in v6. Only enable this if this is the %>
+<%# default vhost; if 'ipv6only=on' is declared twice then the nginx syntax %>
+<%# check will throw this: %>
+<%# [emerg] duplicate listen options for [::]:80 in /etc/nginx/sites-enabled/vhost %>
+  listen   [::]:<%= port %><%= " default ipv6only=on" if isdefaultvhost %>;
 <%   end -%>
 <% end -%>
 
 <% if ssl -%>
-  # Do SSL, and don't do it terribly.
   listen   <%= ssl_port %><%= " default" if isdefaultvhost %> ssl;
 <%   if has_variable?( 'ipaddress6' ) -%>
-  # Listen on an ipv6 version of this port too, but only do v6 on it, so we
-  # don't get strange v4 mapped IPs in v6.
-  listen   [::]:<%= ssl_port %><%= " default" if isdefaultvhost %> ipv6only=on ssl;
+  <%# See the above rambling about ipv6only on default vhosts %>
+  listen   [::]:<%= ssl_port %><%= " default ipv6only=on" if isdefaultvhost %> ssl;
 <%   end -%>
 
   ssl_certificate      <%= ssl_path %>/certs/pl_chain.cert;
