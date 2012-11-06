@@ -1,7 +1,7 @@
 <%# Configuration fragment for listening on IPv4 and IPv6 with SSL %>
 <% unless @sslonly -%>
   listen   <%= port %><%= " default" if isdefaultvhost %>;
-<%   if has_variable?( 'ipaddress6' ) -%>
+<%   if scope.lookupvar('::ipaddress6') -%>
 <%# Listen on an ipv6 version of this port too, but only do v6 on it, so we %>
 <%# don't get strange v4 mapped IPs in v6. Only enable this if this is the %>
 <%# default vhost; if 'ipv6only=on' is declared twice then the nginx syntax %>
@@ -13,7 +13,7 @@
 
 <% if ssl -%>
   listen   <%= ssl_port %><%= " default" if isdefaultvhost %> ssl;
-<%   if has_variable?( 'ipaddress6' ) -%>
+<%   if scope.lookupvar('::ipaddress6') -%>
   <%# See the above rambling about ipv6only on default vhosts %>
   listen   [::]:<%= ssl_port %><%= " default ipv6only=on" if isdefaultvhost %> ssl;
 <%   end -%>
