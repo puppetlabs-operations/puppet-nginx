@@ -7,7 +7,7 @@ server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
 
-  server_name <%= srvname %><% if has_variable?( 'serveralias' )%> <%= serveraliases %><% end %>;
+<%= scope.function_template(['nginx/vhost/_servername.conf.erb']) %>
 
   # Not sure if you want these for a mere redirector, but here they are.
   #

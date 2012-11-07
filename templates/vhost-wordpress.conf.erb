@@ -8,9 +8,9 @@
 
 server {
 
-<%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
+<%= scope.function_template(['nginx/vhost/_servername.conf.erb']) %>
 
-  server_name <%= srvname %><% if has_variable?( 'serveralias' )%> <%= serveraliases %><% end %>;
+<%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
 
   index index.php index.html;
 

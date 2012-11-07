@@ -1,0 +1,11 @@
+<% if @serveraliases -%>
+  <% if @serveraliases.is_a? String -%>
+  server_name <%= srvname %> <%= @serveraliases %>;
+  <% elsif serveraliases.is_a? Array -%>
+  server_name <%= srvname %> <%= @serveraliases.join(' ') %>;
+  <% else -%>
+    <% raise ArgumentError, "Expected @serveraliases to be one of [String, Array], got '#{@serveraliases.inspect}:#{@serveraliases.class}'" -%>
+  <% end -%>
+<% else -%>
+  server_name <%= srvname %>;
+<% end -%>
