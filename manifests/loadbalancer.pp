@@ -16,8 +16,10 @@ define nginx::loadbalancer(
 
   # For some reason, $name is munged everywhere else into $appname. Here
   # we just blindly copy it over. Because lol.
-
   $appname = $name
+
+  # lolololol!
+  $isdefaultvhost = true
 
   if ! is_array($workers) {
     fail('$workers must be an array of upstream workers')
