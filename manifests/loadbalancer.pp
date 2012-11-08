@@ -25,7 +25,7 @@ define nginx::loadbalancer(
     fail('$workers must be an array of upstream workers')
   }
 
-  file { "${nginx::params::vdir}/${priority}-${name}_lb":
+  file { "${nginx::params::vdir}/${priority}-${name}-loadbalancer":
     content => template($template),
     owner   => 'root',
     group   => '0',
