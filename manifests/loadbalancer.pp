@@ -8,6 +8,7 @@ define nginx::loadbalancer(
   $sslonly        = false,
   $max_fails      = 1,
   $fail_timeout   = 10,
+  $proto          = 'http',
 ) {
 
   include nginx
