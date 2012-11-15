@@ -30,7 +30,7 @@ server {
     proxy_set_header      X-SSL-Issuer    $ssl_client_i_dn;
   }
 
-<% if @magic -%>
+<% if @magic and not @magic.empty? -%>
   # Add in any addition template data. This is entirely arbitrary, so in the
   # words of Ben, this could be quite "jazzy"
   <%= magic %>
