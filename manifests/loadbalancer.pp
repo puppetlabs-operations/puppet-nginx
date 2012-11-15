@@ -7,7 +7,7 @@ define nginx::loadbalancer(
   $ssl          = false,
   $ssl_port     = 443,
   $sslonly      = false,
-  $max_fails    = 1,
+  $max_fails    = 3,
   $fail_timeout = 10,
   $proto        = 'http',
   $magic        = '',     # Accept arbitrary template data to append to the vhost
