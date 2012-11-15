@@ -1,5 +1,6 @@
 define nginx::loadbalancer(
   $workers,
+  $backups      = [],
   $priority     = 75,
   $template     = 'nginx/vhost-loadbalancing.conf.erb',
   $port         = 80,
@@ -26,6 +27,10 @@ define nginx::loadbalancer(
 
   if ! is_array($workers) {
     fail('$workers must be an array of upstream workers')
+  }
+
+  if ! is_array($backups) {
+    fail('$backups must be an array of upstream workers')
   }
 
   file { "${nginx::params::vdir}/${priority}-${name}-loadbalancer":

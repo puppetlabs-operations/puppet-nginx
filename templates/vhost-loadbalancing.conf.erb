@@ -3,6 +3,12 @@ upstream workers {
 <% @workers.each do |worker| -%>
   server <%= worker %> max_fails=<%= @max_fails %> fail_timeout=<%= @fail_timeout %>s;
 <% end -%>
+<% unless @backups.empty? -%>
+  # Use backups in the case a main server fails
+<% @workers.each do |worker| -%>
+  server <%= worker %> max_fails=<%= @max_fails %> fail_timeout=<%= @fail_timeout %>s backup;
+<% end -%>
+<% end -%>
 }
 server {
 
