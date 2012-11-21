@@ -28,6 +28,7 @@ server {
     proxy_set_header      X-Client-DN     $ssl_client_s_dn;
     proxy_set_header      X-SSL-Subject   $ssl_client_s_dn;
     proxy_set_header      X-SSL-Issuer    $ssl_client_i_dn;
+    client_max_body_size  10m;
   }
 
 <% unless @magic.nil? or @magic.empty? -%>
