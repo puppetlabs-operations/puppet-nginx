@@ -13,13 +13,15 @@ define nginx::vhost(
   $priority         = '10',
   $template         = 'nginx/vhost-default.conf.erb',
   $servername       = '',
+  $ssl              = false,
+  $ssl_port         = '443',
   $magic            = '',
   $serveraliases    = undef,
   $template_options = {},
   $isdefaultvhost   = false,
   $vhostroot        = '',
   $autoindex        = false
-  ) {
+) {
 
   include nginx
   include nginx::server
