@@ -50,6 +50,11 @@ define nginx::vhost(
     notify  => Service['nginx'],
   }
 
+  if $ssl == true {
+    include ssl::params
+    $ssl_path = $ssl::params::ssl_path
+  }
+
   # liberally borrowed from apache module.
   if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
     @firewall {
