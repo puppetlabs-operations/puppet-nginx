@@ -33,6 +33,11 @@ define nginx::vhost(
     $srvname = $servername
   }
 
+  if $ssl == true {
+    include ssl::params
+    $ssl_path = $ssl::params::ssl_path
+  }
+
   # The location to put the root of this vhost
   if $vhostroot == '' {
     $docroot = "/var/www/${srvname}"
@@ -48,11 +53,6 @@ define nginx::vhost(
     mode    => '755',
     require => Package['nginx'],
     notify  => Service['nginx'],
-  }
-
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
   }
 
   # liberally borrowed from apache module.
