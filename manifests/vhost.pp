@@ -54,16 +54,4 @@ define nginx::vhost(
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
-
-  # liberally borrowed from apache module.
-  if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {
-    @firewall {
-      "0100-INPUT ACCEPT $port":
-        jump  => 'ACCEPT',
-        dport => "$port",
-        proto => 'tcp'
-    }
-  }
-
 }
-# EOF
