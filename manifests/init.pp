@@ -18,6 +18,6 @@ class nginx {
     fail( "No nginx possible on ${hostname}" )
   }
 
-  if defined(Class['munin'])  { include munin::nginx }
+  if defined(Class['munin'])  { include metrics::munin::nginx }
 
 }
