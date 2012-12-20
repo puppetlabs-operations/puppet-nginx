@@ -103,12 +103,6 @@ server {
     proxy_pass http://up_<%= appname %>;
   }
 
-  # Rails error pages
-  error_page 500 502 503 504 /500.html;
-  location = /500.html {
-    root <%= rootpath %><% if gunicorn != true %>/public<% end %>;
-  }
-
 <% unless aliases.empty? -%>
   # equivilent of Alias /foo /bar/plop in apache
 <%   aliases.each do |a,path| -%>
