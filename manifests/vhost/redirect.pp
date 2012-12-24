@@ -51,4 +51,5 @@ define nginx::vhost::redirect (
       require => Package['nginx'],
       notify  => Service['nginx'],
   }
+
 }
