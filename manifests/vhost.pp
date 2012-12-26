@@ -1,6 +1,6 @@
 # Define: nginx::server::vhost
 #
-#   nginx vhost. For serving web traffic as you would with apache.
+#   Deploy an nginx vhost configuration file.
 #
 # Parameters:
 #
@@ -9,7 +9,6 @@
 #
 define nginx::vhost(
   $port             = '80',
-  #$dest,
   $priority         = '10',
   $template         = 'nginx/vhost-default.conf.erb',
   $servername       = '',
@@ -20,8 +19,9 @@ define nginx::vhost(
   $template_options = {},
   $isdefaultvhost   = false,
   $vhostroot        = '',
-  $autoindex        = false
-) {
+  $autoindex        = false,
+  $webroot          = '/var/www'
+) inherits nginx::params {
 
   include nginx
   include nginx::server
@@ -33,19 +33,19 @@ define nginx::vhost(
     $srvname = $servername
   }
 
-  if $ssl == true {
+  if ( $ssl == true ) {
     include ssl::params
     $ssl_path = $ssl::params::ssl_path
   }
 
-  # The location to put the root of this vhost
+  # Determine the location to put the root of this vhost
   if $vhostroot == '' {
-    $docroot = "/var/www/${srvname}"
+    $docroot = "${webroot}/${srvname}"
   } else {
     $docroot = $vhostroot
   }
 
-  # Drop the nginx configuration
+  # Write the nginx configuration
   file { "${nginx::params::vdir}/${priority}-${name}":
     content => template($template),
     owner   => 'root',
@@ -54,4 +54,5 @@ define nginx::vhost(
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
+
 }

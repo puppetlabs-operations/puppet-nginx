@@ -46,4 +46,5 @@ class nginx::params {
         warning( "Sorry, nginx module isn't built for ${operatingsystem} yet." )
     }
   }
+
 }

@@ -11,7 +11,7 @@ define nginx::loadbalancer(
   $fail_timeout = 10,
   $proto        = 'http',
   $magic        = '',     # Accept arbitrary template data to append to the vhost
-) {
+) inherits nginx::params {
 
   include nginx
   include ssl::params
@@ -41,4 +41,5 @@ define nginx::loadbalancer(
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
+
 }

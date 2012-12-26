@@ -34,18 +34,17 @@ class nginx::cache (
   $upstream_server = 'localhost',
   $upstream_port   = '80',
   $magic           = ''
-  ) {
+) inherits nginx::params {
 
-  # this pulls in params too, to check it works and get paths.
   include nginx
 
-  file {
-    "${nginx::params::vdir}/${priority}-${upstream_server}_caching":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${upstream_server}_caching":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
+
 }

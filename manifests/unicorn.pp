@@ -8,7 +8,6 @@
 #   include nginx::server
 #
 define nginx::unicorn(
-  #$dest,
   $unicorn_socket,
   $priority       = '10',
   $template       = 'nginx/vhost-unicorn.conf.erb',
@@ -24,7 +23,7 @@ define nginx::unicorn(
   $isdefaultvhost = false,
   $aliases        = {},
   $gunicorn       = false
-  ) {
+) inherits nginx::params {
 
   include nginx
 
@@ -64,14 +63,13 @@ define nginx::unicorn(
     $ssl_path = $ssl::params::ssl_path
   }
 
-
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '0755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '0755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
+
 }

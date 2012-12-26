@@ -18,7 +18,7 @@ define nginx::vhost::homedir (
   $isdefaultvhost = false,
   $homedir        = '/home',
   $pubdir         = 'public_html'
-  ) {
+) inherits nginx::params {
 
   include nginx
 
@@ -42,15 +42,13 @@ define nginx::vhost::homedir (
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
   }
 
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
 }
-# EOF

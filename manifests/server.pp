@@ -21,15 +21,15 @@ class nginx::server (
     name   => $nginx::params::package,
   }
 
-  if $operatingsystem == "FreeBSD" { 
-    Package { provider => pkgng } 
+  if $operatingsystem == "FreeBSD" {
+    Package { provider => pkgng }
   }
 
   if $operatingsystem == 'Debian' {
     apt::pin{ 'nginx':
-        release  => 'squeeze-backports',
-        priority => '1001',
-        before   => Package['nginx'],
+      release  => 'squeeze-backports',
+      priority => '1001',
+      before   => Package['nginx'],
     }
 
     # Pull in package xz if we haven't already.
