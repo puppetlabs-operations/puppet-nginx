@@ -37,9 +37,11 @@ define nginx::vhost::proxy (
   $ssl_port        = '443',
   $magic           = '',
   $isdefaultvhost  = false
-) {
+  $ssl_path        = $nginx::params::ssl_path,
+  $ssl_cert_file   = $nginx::params::ssl_cert_file,
+  $ssl_key_file    = $nginx::params::ssl_key_file
+) inherits nginx::params {
 
-  # this pulls in params too, to check it works and get paths.
   include nginx
 
   if $servername == '' {
@@ -48,19 +50,13 @@ define nginx::vhost::proxy (
     $srvname = $servername
   }
 
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
-  }
-
-  file {
-    "${nginx::params::vdir}/${priority}-${name}_proxy":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${name}_proxy":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
 }
