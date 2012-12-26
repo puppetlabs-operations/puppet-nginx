@@ -22,7 +22,10 @@ define nginx::unicorn(
   $serveraliases  = undef,
   $isdefaultvhost = false,
   $aliases        = {},
-  $gunicorn       = false
+  $gunicorn       = false,
+  $ssl_path       = $nginx::params::ssl_path,
+  $ssl_cert_file  = $nginx::params::ssl_cert_file,
+  $ssl_key_file   = $nginx::params::ssl_key_file
 ) inherits nginx::params {
 
   include nginx
@@ -56,11 +59,6 @@ define nginx::unicorn(
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1_ssl' )
   } else {
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
-  }
-
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
   }
 
   file { "${nginx::params::vdir}/${priority}-${name}":

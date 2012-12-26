@@ -1,21 +1,22 @@
 define nginx::loadbalancer(
   $workers,
-  $backups      = [],
-  $priority     = 75,
-  $template     = 'nginx/vhost-loadbalancing.conf.erb',
-  $port         = 80,
-  $ssl          = false,
-  $ssl_port     = 443,
-  $sslonly      = false,
-  $max_fails    = 3,
-  $fail_timeout = 10,
-  $proto        = 'http',
-  $magic        = '',     # Accept arbitrary template data to append to the vhost
+  $backups       = [],
+  $priority      = 75,
+  $template      = 'nginx/vhost-loadbalancing.conf.erb',
+  $port          = 80,
+  $ssl           = false,
+  $ssl_port      = 443,
+  $sslonly       = false,
+  $max_fails     = 3,
+  $fail_timeout  = 10,
+  $proto         = 'http',
+  $magic         = '',     # Accept arbitrary template data to append to the vhost
+  $ssl_path      = $nginx::params::ssl_path,
+  $ssl_cert_file = $nginx::params::ssl_cert_file,
+  $ssl_key_file  = $nginx::params::ssl_key_file
 ) inherits nginx::params {
 
   include nginx
-  include ssl::params
-  $ssl_path = $ssl::params::ssl_path
 
   # For some reason, $name is munged everywhere else into $appname. Here
   # we just blindly copy it over. Because lol.

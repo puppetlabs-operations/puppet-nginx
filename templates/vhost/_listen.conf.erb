@@ -18,8 +18,8 @@
   listen   [::]:<%= ssl_port %><%= " default ipv6only=on" if @isdefaultvhost %> ssl;
 <%   end -%>
 
-  ssl_certificate      <%= ssl_path %>/certs/pl_chain.cert;
-  ssl_certificate_key  <%= ssl_path %>/private/pl.key;
+  ssl_certificate      <%= ssl_cert_file %>;
+  ssl_certificate_key  <%= ssl_key_file %>;
   ssl_ciphers          RC4:HIGH:!aNULL:!MD5;  # use decent and non-crap ciphers.
   ssl_prefer_server_ciphers on;
   ssl_session_timeout  10m;
