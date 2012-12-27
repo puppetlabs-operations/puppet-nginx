@@ -29,6 +29,7 @@ class nginx::params {
         $phpfpm_service = 'php5-fpm'
         $fastcgi_params = '/etc/nginx/fastcgi_params'
         $user           = 'www-data'
+        $webroot        = '/var/www'
       }
     'freebsd': {
         $package     = 'nginx'
@@ -41,6 +42,7 @@ class nginx::params {
         $confd       = "${etcdir}/conf.d"
         $threadcount = '4'
         $user        = 'www'
+        $webroot     = '/usr/local/www'
       }
     default: {
         warning( "Sorry, nginx module isn't built for ${operatingsystem} yet." )
