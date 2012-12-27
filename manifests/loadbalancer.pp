@@ -25,13 +25,13 @@ define nginx::loadbalancer(
   }
 
   case $ssl_cert_file {
-    '':      { $nginx_ssl_path = $nginx::params::ssl_cert_file }
-    default: { $nginx_ssl_path = $ssl_cert_file }
+    '':      { $nginx_ssl_cert_file = $nginx::params::ssl_cert_file }
+    default: { $nginx_ssl_cert_file = $ssl_cert_file }
   }
 
   case $ssl_key_file {
-    '':      { $nginx_ssl_path = $nginx::params::ssl_key_file }
-    default: { $nginx_ssl_path = $ssl_key_file }
+    '':      { $nginx_ssl_key_file = $nginx::params::ssl_key_file }
+    default: { $nginx_ssl_key_file = $ssl_key_file }
   }
 
   # For some reason, $name is munged everywhere else into $appname. Here
