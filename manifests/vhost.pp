@@ -21,13 +21,29 @@ define nginx::vhost(
   $vhostroot        = '',
   $autoindex        = false,
   $webroot          = '/var/www',
-  $ssl_path         = $nginx::params::ssl_path,
-  $ssl_cert_file    = $nginx::params::ssl_cert_file,
-  $ssl_key_file     = $nginx::params::ssl_key_file
-) inherits nginx::params {
+  $ssl_path         = '',
+  $ssl_cert_file    = '',
+  $ssl_key_file     = ''
+) {
 
   include nginx
   include nginx::server
+  include nginx::params
+
+  case $ssl_path {
+    '':      { $nginx_ssl_path = $nginx::params::ssl_path }
+    default: { $nginx_ssl_path = $ssl_path }
+  }
+
+  case $ssl_cert_file {
+    '':      { $nginx_ssl_path = $nginx::params::ssl_cert_file }
+    default: { $nginx_ssl_path = $ssl_cert_file }
+  }
+
+  case $ssl_key_file {
+    '':      { $nginx_ssl_path = $nginx::params::ssl_key_file }
+    default: { $nginx_ssl_path = $ssl_key_file }
+  }
 
   # Determine the name of the vhost
   if $servername == '' {

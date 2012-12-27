@@ -9,9 +9,10 @@
 class nginx::server (
   $threadcount                   = $nginx::params::threadcount,
   $server_names_hash_bucket_size = $nginx::params::server_names_hash_bucket_size,
-) inherits nginx::params {
+) {
 
   include nginx
+  include nginx::params
 
   # We assume for our modules, we have the motd module, & use it.
   motd::register{ 'nginx': }

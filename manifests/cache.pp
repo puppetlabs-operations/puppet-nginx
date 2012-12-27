@@ -34,7 +34,7 @@ class nginx::cache (
   $upstream_server = 'localhost',
   $upstream_port   = '80',
   $magic           = ''
-) inherits nginx::params {
+) {
 
   include nginx
 

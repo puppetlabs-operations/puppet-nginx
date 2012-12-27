@@ -9,9 +9,10 @@
 #
 define nginx::conf (
   $template
-) inherits nginx::params {
+) {
 
   include nginx
+  include nginx::params
 
   file { "${nginx::params::confd}/${name}.conf":
     content => template($template),
