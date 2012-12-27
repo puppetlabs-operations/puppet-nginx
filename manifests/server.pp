@@ -15,6 +15,7 @@ class nginx::server (
   $default_ssl_ca                = undef,
   $default_ssl_crl_path          = undef,
   $serveradmin                   = 'root@localhost',
+  $default_webroot               = $nginx::params::default_webroot,
 ) inherits nginx::params {
 
   include nginx
