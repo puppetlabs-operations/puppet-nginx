@@ -17,34 +17,19 @@ define nginx::unicorn(
   $magic          = '',
   $port           = 80,
   $ssl            = false,
-  $ssl_port       = 443,
+  $ssl_port       = '443',
+  $ssl_path       = $nginx::server::default_ssl_path,
+  $ssl_cert       = $nginx::server::default_ssl_cert,
+  $ssl_key        = $nginx::server::default_ssl_key,
   $sslonly        = false,
   $serveraliases  = undef,
   $isdefaultvhost = false,
   $aliases        = {},
-  $gunicorn       = false,
-  $ssl_path       = '',
-  $ssl_cert_file  = '',
-  $ssl_key_file   = ''
+  $gunicorn       = false
 ) {
 
   include nginx
   include nginx::params
-
-  case $ssl_path {
-    '':      { $nginx_ssl_path = $nginx::params::ssl_path }
-    default: { $nginx_ssl_path = $ssl_path }
-  }
-
-  case $ssl_cert_file {
-    '':      { $nginx_ssl_cert_file = $nginx::params::ssl_cert_file }
-    default: { $nginx_ssl_cert_file = $ssl_cert_file }
-  }
-
-  case $ssl_key_file {
-    '':      { $nginx_ssl_key_file = $nginx::params::ssl_key_file }
-    default: { $nginx_ssl_key_file = $ssl_key_file }
-  }
 
   if $servername == '' {
     $srvname = $name

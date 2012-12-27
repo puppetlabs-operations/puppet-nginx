@@ -9,6 +9,7 @@
 class nginx::server (
   $threadcount                   = $nginx::params::threadcount,
   $server_names_hash_bucket_size = $nginx::params::server_names_hash_bucket_size,
+  $default_ssl_path              = $nginx::params::default_ssl_path,
   $default_ssl_cert              = $nginx::params::default_ssl_cert,
   $default_ssl_key               = $nginx::params::default_ssl_key,
   $default_ssl_chain             = undef,
