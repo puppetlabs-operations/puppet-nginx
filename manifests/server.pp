@@ -9,7 +9,13 @@
 class nginx::server (
   $threadcount                   = $nginx::params::threadcount,
   $server_names_hash_bucket_size = $nginx::params::server_names_hash_bucket_size,
-) {
+  $default_ssl_cert              = $nginx::params::default_ssl_cert,
+  $default_ssl_key               = $nginx::params::default_ssl_key,
+  $default_ssl_chain             = undef,
+  $default_ssl_ca                = undef,
+  $default_ssl_crl_path          = undef,
+  $serveradmin                   = 'root@localhost',
+) inherits nginx::params {
 
   include nginx
   include nginx::params
