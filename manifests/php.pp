@@ -7,8 +7,7 @@
 # Requires:
 #   include nginx::server
 #
-define nginx::php(
-  #$dest,
+define nginx::php (
   $fpm_socket     = 'http://127.0.0.1:9000',
   $priority       = '10',
   $template       = 'nginx/vhost-php.conf.erb',
@@ -18,20 +17,24 @@ define nginx::php(
   $magic          = '',
   $port           = 80,
   $ssl            = false,
-  $ssl_port       = 443,
+  $ssl_port       = '443',
+  $ssl_path       = $nginx::server::default_ssl_path,
+  $ssl_cert       = $nginx::server::default_ssl_cert,
+  $ssl_key        = $nginx::server::default_ssl_key,
   $sslonly        = false,
   $serveraliases  = undef,
   $isdefaultvhost = false,
   $aliases        = {},
-  ) {
+) {
 
   include nginx
+  include nginx::params
 
   if $operatingsystem != 'Debian' {
     err("Nginx php only works on debian currently.")
     fail("Nginx php need debian.")
   }
-  
+
   apt::source { "dotdeb":
     location    => "http://packages.dotdeb.org",
     repos       => 'all',
@@ -89,19 +92,13 @@ define nginx::php(
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
   }
 
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '0755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
-
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '0755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
-  }
 }

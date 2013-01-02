@@ -9,20 +9,18 @@
 #
 define nginx::conf (
   $template
-  ) {
+) {
 
   include nginx
   include nginx::params
 
-  file {
-    "${nginx::params::confd}/${name}.conf":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::confd}/${name}.conf":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
 }
-# EOF

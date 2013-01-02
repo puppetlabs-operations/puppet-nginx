@@ -15,22 +15,21 @@ define nginx::vhost::redirect (
   $servername     = '',
   $ssl            = false,
   $ssl_port       = '443',
+  $ssl_path       = $nginx::server::default_ssl_path,
+  $ssl_cert       = $nginx::server::default_ssl_cert,
+  $ssl_key        = $nginx::server::default_ssl_key,
   $status         = 'permanent',
   $magic          = '',
-  $isdefaultvhost = false
-  ) {
+  $isdefaultvhost = false,
+) {
 
   include nginx
+  include nginx::params
 
   if $servername == '' {
     $srvname = $name
   } else {
     $srvname = $servername
-  }
-
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
   }
 
   # Need to make some variable names so the templates can use them!

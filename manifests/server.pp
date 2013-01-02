@@ -9,42 +9,30 @@
 class nginx::server (
   $threadcount                   = $nginx::params::threadcount,
   $server_names_hash_bucket_size = $nginx::params::server_names_hash_bucket_size,
+  $default_ssl_path              = $nginx::params::default_ssl_path,
+  $default_ssl_cert              = $nginx::params::default_ssl_cert,
+  $default_ssl_key               = $nginx::params::default_ssl_key,
+  $default_ssl_chain             = undef,
+  $default_ssl_ca                = undef,
+  $default_ssl_crl_path          = undef,
+  $serveradmin                   = 'root@localhost',
+  $default_webroot               = $nginx::params::default_webroot,
 ) inherits nginx::params {
 
   include nginx
+  include nginx::params
 
   # We assume for our modules, we have the motd module, & use it.
   motd::register{ 'nginx': }
 
+  # Platform specific server setup items
+  case $operatingsystem {
+    'debian': { include nginx::server::debian }
+  }
+
   package{ 'nginx':
     ensure => present,
     name   => $nginx::params::package,
-  }
-
-  if $operatingsystem == "FreeBSD" { 
-    Package { provider => pkgng } 
-  }
-
-  if $operatingsystem == 'Debian' {
-    apt::pin{ 'nginx':
-        release  => 'squeeze-backports',
-        priority => '1001',
-        before   => Package['nginx'],
-    }
-
-    # Pull in package xz if we haven't already.
-    # See dist/packages/manifests/archive.pp
-    Package <| alias == 'xz' |>
-
-    # Debian uses logrotate, other things use other things.
-    file{ '/etc/logrotate.d/nginx':
-      ensure  => file,
-      content => template( 'nginx/debian_logrotate.erb' ),
-      mode    => '0644',
-      owner   => 'root',
-      group   => 'root',
-      require => Package['xz'],
-    }
   }
 
   service{ 'nginx':
@@ -56,7 +44,6 @@ class nginx::server (
     restart    => $nginx::params::restart,
     subscribe  => Package['nginx'],
   }
-
 
   # All the files, stolen from debian, hence this being debian
   # specific at the minute.

@@ -5,7 +5,10 @@ define nginx::loadbalancer(
   $template     = 'nginx/vhost-loadbalancing.conf.erb',
   $port         = 80,
   $ssl          = false,
-  $ssl_port     = 443,
+  $ssl_port     = '443',
+  $ssl_path     = $nginx::server::default_ssl_path,
+  $ssl_cert     = $nginx::server::default_ssl_cert,
+  $ssl_key      = $nginx::server::default_ssl_key,
   $sslonly      = false,
   $max_fails    = 3,
   $fail_timeout = 10,
@@ -14,8 +17,7 @@ define nginx::loadbalancer(
 ) {
 
   include nginx
-  include ssl::params
-  $ssl_path = $ssl::params::ssl_path
+  include nginx::params
 
   # For some reason, $name is munged everywhere else into $appname. Here
   # we just blindly copy it over. Because lol.
@@ -41,4 +43,5 @@ define nginx::loadbalancer(
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
+
 }

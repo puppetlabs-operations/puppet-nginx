@@ -14,23 +14,22 @@ define nginx::vhost::homedir (
   $servername     = '',
   $ssl            = false,
   $ssl_port       = '443',
+  $ssl_path       = $nginx::server::default_ssl_path,
+  $ssl_cert       = $nginx::server::default_ssl_cert,
+  $ssl_key        = $nginx::server::default_ssl_key,
   $magic          = '',
   $isdefaultvhost = false,
   $homedir        = '/home',
-  $pubdir         = 'public_html'
-  ) {
+  $pubdir         = 'public_html',
+) {
 
   include nginx
+  include nginx::params
 
   if $servername == '' {
     $srvname = $name
   } else {
     $srvname = $servername
-  }
-
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
   }
 
   # Need to make some variable names so the templates can use them!
@@ -42,15 +41,13 @@ define nginx::vhost::homedir (
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
   }
 
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
 }
-# EOF

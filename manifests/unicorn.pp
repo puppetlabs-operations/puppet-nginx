@@ -8,7 +8,6 @@
 #   include nginx::server
 #
 define nginx::unicorn(
-  #$dest,
   $unicorn_socket,
   $priority       = '10',
   $template       = 'nginx/vhost-unicorn.conf.erb',
@@ -18,15 +17,19 @@ define nginx::unicorn(
   $magic          = '',
   $port           = 80,
   $ssl            = false,
-  $ssl_port       = 443,
+  $ssl_port       = '443',
+  $ssl_path       = $nginx::server::default_ssl_path,
+  $ssl_cert       = $nginx::server::default_ssl_cert,
+  $ssl_key        = $nginx::server::default_ssl_key,
   $sslonly        = false,
   $serveraliases  = undef,
   $isdefaultvhost = false,
   $aliases        = {},
   $gunicorn       = false
-  ) {
+) {
 
   include nginx
+  include nginx::params
 
   if $servername == '' {
     $srvname = $name
@@ -59,19 +62,13 @@ define nginx::unicorn(
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
   }
 
-  if $ssl == true {
-    include ssl::params
-    $ssl_path = $ssl::params::ssl_path
+  file { "${nginx::params::vdir}/${priority}-${name}":
+    content => template($template),
+    owner   => 'root',
+    group   => '0',
+    mode    => '0755',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
-
-  file {
-    "${nginx::params::vdir}/${priority}-${name}":
-      content => template($template),
-      owner   => 'root',
-      group   => '0',
-      mode    => '0755',
-      require => Package['nginx'],
-      notify  => Service['nginx'],
-  }
 }
