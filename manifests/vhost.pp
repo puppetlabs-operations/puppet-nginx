@@ -27,6 +27,7 @@ define nginx::vhost(
 ) {
 
   include nginx
+  include nginx::server
   include nginx::params
 
   # Determine the name of the vhost
