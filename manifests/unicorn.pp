@@ -29,6 +29,7 @@ define nginx::unicorn(
 ) {
 
   include nginx
+  include nginx::server
   include nginx::params
 
   if $servername == '' {
