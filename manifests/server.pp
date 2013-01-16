@@ -22,9 +22,6 @@ class nginx::server (
   include nginx
   include nginx::params
 
-  # We assume for our modules, we have the motd module, & use it.
-  motd::register{ 'nginx': }
-
   # Platform specific server setup items
   case $operatingsystem {
     'debian': { include nginx::server::debian }
