@@ -41,6 +41,7 @@ define nginx::vhost::proxy (
   $ssl_redirect    = false,
   $magic           = '',
   $isdefaultvhost  = false,
+  $proxy           = true,
 ) {
 
   include nginx
