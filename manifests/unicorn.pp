@@ -18,7 +18,6 @@ define nginx::unicorn(
   $port           = 80,
   $ssl            = false,
   $ssl_port       = '443',
-  $ssl_path       = $nginx::server::default_ssl_path,
   $ssl_cert       = $nginx::server::default_ssl_cert,
   $ssl_key        = $nginx::server::default_ssl_key,
   $sslonly        = false,
@@ -61,7 +60,8 @@ define nginx::unicorn(
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1_ssl' )
 
     # puppetlabs-stdlib functions
-    validate_absolute_path($ssl_path)
+    validate_absolute_path($ssl_cert)
+    validate_absolute_path($ssl_key)
 
   } else {
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
@@ -75,5 +75,4 @@ define nginx::unicorn(
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
-
 }
