@@ -62,8 +62,6 @@ define nginx::unicorn(
 
     # puppetlabs-stdlib functions
     validate_absolute_path($ssl_path)
-    validate_absolute_path($ssl_cert)
-    validate_absolute_path($ssl_key)
 
   } else {
     $appname = regsubst( $srvname , '^(\w+?)\..*?$' , '\1' )
