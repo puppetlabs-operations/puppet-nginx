@@ -48,10 +48,4 @@ class nginx::params {
         warning( "Sorry, nginx module isn't built for ${operatingsystem} yet." )
     }
   }
-
-  include ssl::params
-  $default_ssl_path = $ssl::params::ssl_path
-  $default_ssl_cert = $ssl::params::ssl_cert_file
-  $default_ssl_key  = $ssl::params::ssl_key_file
-
 }
