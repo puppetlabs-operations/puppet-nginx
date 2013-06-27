@@ -12,6 +12,7 @@ define nginx::vhost::homedir (
   $priority       = '20',
   $template       = 'nginx/vhost-homedir.conf.erb',
   $servername     = '',
+  $serveraliases  = undef,
   $ssl            = false,
   $ssl_port       = '443',
   $ssl_path       = $nginx::server::default_ssl_path,
