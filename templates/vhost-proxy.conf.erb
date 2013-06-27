@@ -2,8 +2,8 @@
 # will happen.
 #
 
-upstream <%= name %>_proxy {
-  server <%=upstream_server%>:<%=upstream_port%> max_fails=2 fail_timeout=10;
+upstream <%= @upstream_server %> {
+  server <%= @upstream_server %>:<%= @upstream_port %> max_fails=2 fail_timeout=10;
 }
 
 server {
