@@ -15,13 +15,6 @@ server {
 <%= scope.function_template(['nginx/vhost/_logging.conf.erb']) %>
 
     open_log_file_cache     max=1000 inactive=20s min_uses=2 valid=1m;
-    log_format <%= srvname %>_proxy '***$time_local '
-                     '$upstream_cache_status '
-                     'Cache-Control: $upstream_http_cache_control '
-                     'Expires: $upstream_http_expires '
-                     '"$request" ($status) '
-                     '"$http_user_agent" ';
-    access_log  /var/log/nginx/<%= srvname %>_proxy.log <%= srvname %>_proxy;
 
 <%= scope.function_template(['nginx/vhost/_proxy.conf.erb']) %>
 
