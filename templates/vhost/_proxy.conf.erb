@@ -1,6 +1,6 @@
 <% if @proxy -%>
     location / {
-        proxy_pass                 http://<%= @upstream_server %>;
+        proxy_pass                 http://<%= @upstream_server %>:<%= @upstream_port %>;
   <% if @ssl_redirect -%>
         proxy_redirect http:// https://;
         if ($scheme = 'http') {

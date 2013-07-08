@@ -2,10 +2,6 @@
 # will happen.
 #
 
-upstream <%= @upstream_server %> {
-  server <%= @upstream_server %>:<%= @upstream_port %> max_fails=2 fail_timeout=10;
-}
-
 server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
