@@ -4,7 +4,7 @@
   <% if @ssl_redirect -%>
         proxy_redirect http:// https://;
         if ($scheme = 'http') {
-          rewrite ^ https://$server_name$request_uri? permanent;
+          rewrite ^ https://$host$request_uri? permanent;
         }
   <% else -%>
         proxy_redirect             off;
