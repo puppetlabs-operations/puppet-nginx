@@ -48,7 +48,7 @@ define nginx::php (
     require => Apt::Source['dotdeb'],
   }
 
-  package { ['php5-common', 'php5-suhosin', 'php5-fpm', 'php5-cgi']:
+  package { ['php5-common', 'php5-fpm', 'php5-cgi']:
     ensure  => present,
     require => [Apt::Source['dotdeb'], Package['php5-cli']],
 
