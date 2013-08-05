@@ -17,6 +17,7 @@ class nginx::server (
   $default_ssl_crl_path          = undef,
   $serveradmin                   = 'root@localhost',
   $default_webroot               = $nginx::params::default_webroot,
+  $ensure                        = 'present',
 ) inherits nginx::params {
 
   include nginx
@@ -28,7 +29,7 @@ class nginx::server (
   }
 
   package{ 'nginx':
-    ensure => present,
+    ensure => $ensure,
     name   => $nginx::params::package,
   }
 
