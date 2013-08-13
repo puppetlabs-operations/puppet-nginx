@@ -14,6 +14,10 @@ class nginx::params {
 
   $server_names_hash_bucket_size = 32
 
+  # allow people to disable server_tokens - by default we shouldn't
+  # leak this information
+  $server_tokens = "off"
+
   case $operatingsystem {
     'debian',
     'ubuntu': {
