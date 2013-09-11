@@ -2,14 +2,14 @@
 
 <% 
 @access_logs.each { |name, type| 
-  name.sub! '{name}', @srvname
+  out_name = name.sub '{name}', @srvname
 -%>
-  access_log  /var/log/nginx/<%= name %> <%= type %>;
+  access_log  /var/log/nginx/<%= out_name %> <%= type %>;
 <% } -%>
 
 <% 
 @error_logs.each { |name, type| 
-  name.sub! '{name}', @srvname
+  out_name = name.sub '{name}', @srvname
 -%>
-  error_log   /var/log/nginx/<%= name %> <%= type %>;
+  error_log   /var/log/nginx/<%= out_name %> <%= type %>;
 <% } -%>
