@@ -45,6 +45,8 @@ define nginx::vhost::proxy (
   $proxy               = true,
   $forward_host_header = true,
   $client_max_body_size = '10m',
+  $access_logs         = { '{name}.access.log' => '' },
+  $error_logs          = { '{name}.error.log' => '' },
 ) {
 
   include nginx

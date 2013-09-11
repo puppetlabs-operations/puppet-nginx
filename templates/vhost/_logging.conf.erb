@@ -1,4 +1,15 @@
 <%# Configuration fragment for logging %>
 
-  access_log  /var/log/nginx/<%= srvname %>.access.log;
-  error_log   /var/log/nginx/<%= srvname %>.error.log;
+<% 
+@access_logs.each { |name, type| 
+  name.sub! '{name}', @srvname
+-%>
+  access_log  /var/log/nginx/<%= name %> <%= type %>;
+<% } -%>
+
+<% 
+@error_logs.each { |name, type| 
+  name.sub! '{name}', @srvname
+-%>
+  error_log   /var/log/nginx/<%= name %> <%= type %>;
+<% } -%>
