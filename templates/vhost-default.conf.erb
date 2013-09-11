@@ -8,7 +8,6 @@ server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
 
-  access_log  /var/log/nginx/<%= srvname %>.access.log;
   <%= scope.function_template(['nginx/vhost/_logging.conf.erb']) %>
 
   location / {
