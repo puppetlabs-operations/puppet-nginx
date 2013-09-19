@@ -10,17 +10,16 @@ upstream workers {
 <% end -%>
 <% end -%>
 }
-<% unless @caches.nil? or @caches.empty? -%>
 
+<% unless @caches.nil? or @caches.empty? -%>
  # Hack to add in additonal upstream for caches 
  upstream cache_workers {
 <% @caches.each do |cache| -%>
   server <%= worker %>;
 <% end -%>
-<% end -%>
 }
-
 <% end -%>
+
 server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
