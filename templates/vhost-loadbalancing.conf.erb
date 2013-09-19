@@ -10,12 +10,28 @@ upstream workers {
 <% end -%>
 <% end -%>
 }
+<% unless @caches.nil? or @caches.empty? -%>
+
+ # Hack to add in additonal upstream for caches 
+ upstream cache_workers {
+<% @caches.each do |cache| -%>
+  server <%= worker %>;
+<% end -%>
+<% end -%>
+}
+
+<% end -%>
 server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
 
   root /usr/share/empty;
+  <% unless @locations.nil? or @locations.empty? -%>
+  
+  # Hack to add any additional template data for locations. 
+  <%= locations %>
 
+<% end -%>
   location / {
     proxy_pass <%= @proto %>://workers;
     proxy_redirect        off;
