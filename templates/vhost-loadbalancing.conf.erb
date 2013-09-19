@@ -15,7 +15,7 @@ upstream workers {
  # Hack to add in additonal upstream for caches 
  upstream cache_workers {
 <% @caches.each do |cache| -%>
-  server <%= worker %>;
+  server <%= cache %>;
 <% end -%>
 }
 <% end -%>
