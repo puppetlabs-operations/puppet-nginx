@@ -12,8 +12,8 @@ upstream workers {
 }
 
 <% unless @caches.nil? or @caches.empty? -%>
- # Hack to add in additonal upstream for caches 
- upstream cache_workers {
+# Hack to add in additonal upstream for caches 
+upstream vcache_workers {
 <% @caches.each do |cache| -%>
   server <%= cache %>;
 <% end -%>
@@ -21,9 +21,8 @@ upstream workers {
 <% end -%>
 
 server {
-
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
-
+  # Define empty root dir for LB
   root /usr/share/empty;
   <% unless @locations.nil? or @locations.empty? -%>
   
