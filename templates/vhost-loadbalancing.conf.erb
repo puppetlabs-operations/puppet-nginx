@@ -12,7 +12,7 @@ upstream workers {
 }
 
 <% unless @caches.nil? or @caches.empty? -%>
-# Hack to add in additonal upstream for caches 
+# Hack to add in additonal upstream for caching 
 upstream vcache_workers {
 <% @caches.each do |cache| -%>
   server <%= cache %>;
@@ -26,7 +26,7 @@ server {
   root /usr/share/empty;
   <% unless @locations.nil? or @locations.empty? -%>
   
-  # Hack to add any additional template data for locations. 
+  # Add placeholder for additional nginx locations 
   <%= locations %>
 
 <% end -%>
