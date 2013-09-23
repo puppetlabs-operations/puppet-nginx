@@ -1,5 +1,6 @@
 define nginx::loadbalancer(
   $workers,
+  $caches,
   $backups      = [],
   $priority     = 75,
   $template     = 'nginx/vhost-loadbalancing.conf.erb',
@@ -14,6 +15,7 @@ define nginx::loadbalancer(
   $fail_timeout = 10,
   $proto        = 'http',
   $magic        = '',     # Accept arbitrary template data to append to the vhost
+  $locations    = '', 
 ) {
 
   include nginx

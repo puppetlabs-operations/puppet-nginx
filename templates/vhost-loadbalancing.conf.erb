@@ -10,12 +10,26 @@ upstream workers {
 <% end -%>
 <% end -%>
 }
+
+<% unless @caches.nil? or @caches.empty? -%>
+# Hack to add in additonal upstream for caching 
+upstream vcache_workers {
+<% @caches.each do |cache| -%>
+  server <%= cache %>;
+<% end -%>
+}
+<% end -%>
+
 server {
-
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
-
+  # Define empty root dir for LB
   root /usr/share/empty;
+  <% unless @locations.nil? or @locations.empty? -%>
+  
+  # Add placeholder for additional nginx locations 
+  <%= locations %>
 
+<% end -%>
   location / {
     proxy_pass <%= @proto %>://workers;
     proxy_redirect        off;
