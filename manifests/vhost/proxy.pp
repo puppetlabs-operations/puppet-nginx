@@ -33,6 +33,7 @@ define nginx::vhost::proxy (
   $upstream_server = 'localhost',
   $upstream_port   = '8080',
   $servername      = '',
+  $serveraliases   = undef,
   $ssl             = false,
   $ssl_port        = '443',
   $ssl_path        = $nginx::server::default_ssl_path,

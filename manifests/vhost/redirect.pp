@@ -13,6 +13,7 @@ define nginx::vhost::redirect (
   $priority       = '10',
   $template       = 'nginx/vhost-redirect.conf.erb',
   $servername     = '',
+  $serveraliases  = undef,
   $ssl            = false,
   $ssl_port       = '443',
   $ssl_path       = $nginx::server::default_ssl_path,
