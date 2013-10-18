@@ -4,16 +4,16 @@
 
 server {
 
-  listen   <%= port %><% if isdefaultvhost == true %> default<% end %> ; ## listen for ipv4
-<% if has_variable?( 'ipaddress6' ) -%>
+  listen   <%= @port %><% if @isdefaultvhost == true %> default<% end %> ; ## listen for ipv4
+<% if @ipaddress6 ) -%>
   # Listen on an ipv6 version of this port too, but only do v6 on it, so we
   # don't get strange v4 mapped IPs in v6.
-  listen   [::]:<%= port %><% if isdefaultvhost == true %> default ipv6only=on<% end %>;
+  listen   [::]:<%= @port %><% if @isdefaultvhost == true %> default ipv6only=on<% end %>;
 <% end -%>
 
 <%= scope.function_template(['nginx/vhost/_servername.conf.erb']) %>
 
-  access_log  /var/log/nginx/<%= srvname %>.access.log;
+  access_log  /var/log/nginx/<%= @srvname %>.access.log;
 
   #location / {
   #  root   /var/www/<%= srvname %>;
@@ -21,10 +21,10 @@ server {
   #}
   
   location ~ ^/~(.+?)(/.*)?$ {
-    alias <%= homedir %>/$1/<%= pubdir %>$2;
+    alias <%= @homedir %>/$1/<%= @pubdir %>$2;
   }
 
   # Anything here is added by use of "magic" so is pretty jazzy.
-  <%= magic %>
+  <%= @magic %>
 }
 
