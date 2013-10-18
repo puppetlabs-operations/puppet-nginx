@@ -1,6 +1,6 @@
 define nginx::loadbalancer(
   $workers,
-  $caches,
+  $caches       = [],
   $backups      = [],
   $priority     = 75,
   $template     = 'nginx/vhost-loadbalancing.conf.erb',
