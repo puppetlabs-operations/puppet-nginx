@@ -29,5 +29,9 @@
         proxy_buffers              4 32k;
         proxy_busy_buffers_size    64k;
         proxy_temp_file_write_size 64k;
+
+ <% if @proxy_magic -%>
+       <%= @proxy_magic -%>
+<% end -%>
     }
 <% end -%>
