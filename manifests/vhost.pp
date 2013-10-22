@@ -23,7 +23,6 @@ define nginx::vhost(
   $isdefaultvhost   = false,
   $vhostroot        = '',
   $autoindex        = false,
-  $proxy_magic      = '',
   $webroot          = $nginx::server::default_webroot
 ) {
 
