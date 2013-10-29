@@ -22,6 +22,8 @@ define nginx::vhost::redirect (
   $status         = 'permanent',
   $magic          = '',
   $isdefaultvhost = false,
+  $access_logs    = { '{name}.access.log' => '' },
+  $error_logs     = { '{name}.error.log' => '' },
 ) {
 
   include nginx

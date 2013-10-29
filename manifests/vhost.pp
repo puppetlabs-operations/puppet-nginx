@@ -23,7 +23,9 @@ define nginx::vhost(
   $isdefaultvhost   = false,
   $vhostroot        = '',
   $autoindex        = false,
-  $webroot          = $nginx::server::default_webroot
+  $webroot          = $nginx::server::default_webroot,
+  $access_logs      = { '{name}.access.log' => '' },
+  $error_logs       = { '{name}.error.log' => '' },
 ) {
 
   include nginx
