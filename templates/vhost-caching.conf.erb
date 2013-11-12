@@ -3,15 +3,15 @@
 #
 
 upstream appservers {
-  server <%=upstream_server%>:<%=upstream_port%> max_fails=2 fail_timeout=10;
+  server <%= @upstream_server %>:<%= @upstream_port %> max_fails=2 fail_timeout=10;
 }
 
 server {
-    listen  <%= port %> default;
-<% if has_variable?( 'ipaddress6' ) -%>
+    listen  <%= @port %> default;
+<% if @ipaddress6 -%>
     # Listen on an ipv6 version of this port too, but only do v6 on it, so we
     # don't get strange v4 mapped IPs in v6.
-    listen   [::]:<%= port %> default ipv6only=on;
+    listen   [::]:<%= @port %> default ipv6only=on;
 <% end -%>
 
     # index                   index.html;
@@ -52,5 +52,5 @@ server {
     }
 
     # Any other spurious options can go here via the medium of magic
-    <%= magic %>
+    <%= @magic %>
 }

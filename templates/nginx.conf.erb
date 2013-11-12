@@ -1,8 +1,8 @@
 # Mostly stock, managed by Puppet, beware.
 #
 
-user <%= user %>;
-worker_processes <%= threadcount %>;
+user <%= @user %>;
+worker_processes <%= @threadcount %>;
 pid /var/run/nginx.pid;
 
 events {
@@ -23,10 +23,10 @@ http {
   types_hash_max_size 2048;
   # server_tokens off;
 
-  server_names_hash_bucket_size <%= server_names_hash_bucket_size %>;
+  server_names_hash_bucket_size <%= @server_names_hash_bucket_size %>;
   # server_name_in_redirect off;
 
-  include <%= etcdir %>/mime.types;
+  include <%= @etcdir %>/mime.types;
   default_type application/octet-stream;
 
   ##
@@ -71,8 +71,8 @@ http {
   # Virtual Host Configs
   ##
 
-  include <%= etcdir %>/conf.d/*.conf;
-  include <%= etcdir %>/sites-enabled/*;
+  include <%= @etcdir %>/conf.d/*.conf;
+  include <%= @etcdir %>/sites-enabled/*;
 }
 
 
