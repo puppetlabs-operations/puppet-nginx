@@ -4,8 +4,6 @@
 #
 # Requires:
 #
-# Debian/ubuntu at present.
-#
 class nginx::server (
   $threadcount                   = $nginx::params::threadcount,
   $server_names_hash_bucket_size = $nginx::params::server_names_hash_bucket_size,
@@ -23,11 +21,6 @@ class nginx::server (
   include nginx
   include nginx::params
 
-  # Platform specific server setup items
-  case $operatingsystem {
-    'debian': { include nginx::server::debian }
-  }
-
   package{ 'nginx':
     ensure => $ensure,
     name   => $nginx::params::package,
@@ -43,8 +36,6 @@ class nginx::server (
     subscribe  => Package['nginx'],
   }
 
-  # All the files, stolen from debian, hence this being debian
-  # specific at the minute.
   file {
     $nginx::params::vdir:
       ensure  => directory,
@@ -59,5 +50,4 @@ class nginx::server (
       notify  => Service['nginx'],
       require => Package['nginx'];
   }
-
 }
