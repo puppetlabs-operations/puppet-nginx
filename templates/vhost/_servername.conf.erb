@@ -7,5 +7,5 @@
     <% raise ArgumentError, "Expected @serveraliases to be one of [String, Array], got '#{@serveraliases.inspect}:#{@serveraliases.class}'" -%>
   <% end -%>
 <% else -%>
-  server_name <%= srvname %>;
+  server_name <%= @srvname %>;
 <% end -%>

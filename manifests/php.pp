@@ -30,20 +30,20 @@ define nginx::php (
   include nginx
   include nginx::params
 
-  if $operatingsystem != 'Debian' {
-    err("Nginx php only works on debian currently.")
-    fail("Nginx php need debian.")
+  if $::operatingsystem != 'Debian' {
+    err('Nginx php only works on debian currently.')
+    fail('Nginx php need debian.')
   }
 
-  apt::source { "dotdeb":
-    location    => "http://packages.dotdeb.org",
+  apt::source { 'dotdeb':
+    location    => 'http://packages.dotdeb.org',
     repos       => 'all',
     key         => '89DF5277',
-    key_source  => "http://www.dotdeb.org/dotdeb.gpg",
+    key_source  => 'http://www.dotdeb.org/dotdeb.gpg',
     include_src => false,
   }
 
-  package { "php5-cli":
+  package { 'php5-cli':
     ensure  => present,
     require => Apt::Source['dotdeb'],
   }
@@ -78,9 +78,13 @@ define nginx::php (
   # through. This means just files are assumed to be socket. If it's
   # something else (unix/http) all good, otherwise fail.
   case $fpm_socket {
-    /^(unix|http?):/: { $fpm_upstream = regsubst( $fpm_socket, '^(http?://)(.+?)/?$', '\2' , 'I' ) }
-    /^\//:            { $fpm_upstream = "unix:${fpm_socket}" }
-    default:          { fail( "Value of ${fpm_socket} is unsupported.")}
+    /^(unix|http?):/: {
+      $fpm_upstream = regsubst( $fpm_socket, '^(http?://)(.+?)/?$', '\2' , 'I' )
+    }
+    /^\//: {
+      $fpm_upstream = "unix:${fpm_socket}"
+    }
+    default: { fail( "Value of ${fpm_socket} is unsupported.")}
   }
 
   # Need to make some variable names so the templates can use them!
@@ -100,5 +104,4 @@ define nginx::php (
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
-
 }
