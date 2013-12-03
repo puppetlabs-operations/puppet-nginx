@@ -36,7 +36,6 @@ define nginx::vhost::proxy (
   $serveraliases   = undef,
   $ssl             = false,
   $ssl_port        = '443',
-  $ssl_path        = $nginx::server::default_ssl_path,
   $ssl_cert        = $nginx::server::default_ssl_cert,
   $ssl_key         = $nginx::server::default_ssl_key,
   $ssl_redirect    = false,
