@@ -1,3 +1,12 @@
+# Define: nginx::loadbalancer
+#
+#   nginx vhost for loadbalancing
+#
+# Parameters:
+#
+# Requires:
+#   include nginx::server
+#
 define nginx::loadbalancer(
   $workers,
   $caches       = [],
@@ -14,11 +23,12 @@ define nginx::loadbalancer(
   $max_fails    = 3,
   $fail_timeout = 10,
   $proto        = 'http',
-  $magic        = '',     # Accept arbitrary template data to append to the vhost
-  $locations    = '', 
+  $magic        = '',  # Accept arbitrary template data to append to the vhost
+  $locations    = '',
 ) {
 
   include nginx
+  include nginx::server
   include nginx::params
 
   # For some reason, $name is munged everywhere else into $appname. Here
@@ -41,9 +51,8 @@ define nginx::loadbalancer(
     content => template($template),
     owner   => 'root',
     group   => '0',
-    mode    => '644',
+    mode    => '0644',
     require => Package['nginx'],
     notify  => Service['nginx'],
   }
-
 }

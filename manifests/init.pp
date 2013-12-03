@@ -15,6 +15,6 @@ class nginx {
   include nginx::params
 
   if ! $nginx::params::package {
-    fail( "No nginx possible on ${hostname}" )
+    fail( "No nginx possible on ${::hostname}" )
   }
 }
