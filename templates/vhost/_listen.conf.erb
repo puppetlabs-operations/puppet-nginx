@@ -11,7 +11,7 @@
 <%   end -%>
 <% end -%>
 
-<% if ssl -%>
+<% if @ssl -%>
   listen   <%= @ssl_port %><%= " default" if @isdefaultvhost %> ssl;
 <%   if scope.lookupvar('::ipaddress6') -%>
   # See the above rambling about ipv6only on default vhosts
