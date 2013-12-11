@@ -1,7 +1,3 @@
-# This vhost is managed by puppet, do not mess with it, terrible terrible things
-# will happen.
-#
-
 upstream appservers {
   server <%= @upstream_server %>:<%= @upstream_port %> max_fails=2 fail_timeout=10;
 }

@@ -1,7 +1,7 @@
-# This vhost is managed by puppet, do not mess with it, terrible terrible things
-# will happen.
+# The homedir vhost configuration
 #
-
+# Serves per user web directories
+#
 server {
 
   listen   <%= @port %><% if @isdefaultvhost == true %> default<% end %> ; ## listen for ipv4
@@ -15,11 +15,6 @@ server {
 
   access_log  /var/log/nginx/<%= @srvname %>.access.log;
 
-  #location / {
-  #  root   /var/www/<%= srvname %>;
-  #  index  index.html index.htm;
-  #}
-  
   location ~ ^/~(.+?)(/.*)?$ {
     alias <%= @homedir %>/$1/<%= @pubdir %>$2;
   }

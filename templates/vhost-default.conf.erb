@@ -1,7 +1,7 @@
-# This vhost is managed by puppet, do not mess with it, terrible terrible things
-# will happen.
+# The default vhost configuration
 #
-
+# Serves a webroot directory
+#
 server {
 
 <%= scope.function_template(['nginx/vhost/_servername.conf.erb']) %>
