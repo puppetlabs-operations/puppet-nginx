@@ -1,5 +1,5 @@
 
-upstream workers {
+upstream <%= @upstream_name %>{
 <% @workers.each do |worker| -%>
   server <%= worker %> max_fails=<%= @max_fails %> fail_timeout=<%= @fail_timeout %>s;
 <% end -%>
@@ -12,8 +12,8 @@ upstream workers {
 }
 
 <% unless @caches.nil? or @caches.empty? -%>
-# Hack to add in additonal upstream for caching 
-upstream vcache_workers {
+# Hack to add in additonal upstream for caching
+upstream <%= @caches_name %> {
 <% @caches.each do |cache| -%>
   server <%= cache %>;
 <% end -%>
@@ -26,14 +26,14 @@ server {
   root /usr/share/empty;
 
   client_max_body_size  15m;
+
   <% unless @locations.nil? or @locations.empty? -%>
-  
-  # Add placeholder for additional nginx locations 
+  # Add placeholder for additional nginx locations
   <%= locations %>
 
 <% end -%>
   location / {
-    proxy_pass <%= @proto %>://workers;
+    proxy_pass <%= @proto %>://<%= @upstream_name %>;
     proxy_redirect        off;
     proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504;
     proxy_connect_timeout 20;

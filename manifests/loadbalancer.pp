@@ -34,6 +34,10 @@ define nginx::loadbalancer(
   # we just blindly copy it over. Because lol.
   $appname = $name
 
+  # Adding new variables
+  $upstream_name= "upstream_${title}",
+  $caches_name  = "vcache_${title}",
+
   # Since this is the only vhost, we hack things up to be the default vhost
   # even though this isn't really meaningful.
   $isdefaultvhost = true
