@@ -9,22 +9,23 @@
 #
 define nginx::unicorn(
   $unicorn_socket,
-  $priority       = '10',
-  $template       = 'nginx/vhost-unicorn.conf.erb',
-  $servername     = '',
-  $path           = '',
-  $auth           = '',
-  $magic          = '',
-  $port           = 80,
-  $ssl            = false,
-  $ssl_port       = '443',
-  $ssl_cert       = $nginx::server::default_ssl_cert,
-  $ssl_key        = $nginx::server::default_ssl_key,
-  $sslonly        = false,
-  $serveraliases  = undef,
-  $isdefaultvhost = false,
-  $aliases        = {},
-  $gunicorn       = false
+  $client_max_body_size  = '10M',
+  $priority              = '10',
+  $template              = 'nginx/vhost-unicorn.conf.erb',
+  $servername            = '',
+  $path                  = '',
+  $auth                  = '',
+  $magic                 = '',
+  $port                  = 80,
+  $ssl                   = false,
+  $ssl_port              = '443',
+  $ssl_cert              = $nginx::server::default_ssl_cert,
+  $ssl_key               = $nginx::server::default_ssl_key,
+  $sslonly               = false,
+  $serveraliases         = undef,
+  $isdefaultvhost        = false,
+  $aliases               = {},
+  $gunicorn              = false
 ) {
 
   include nginx
