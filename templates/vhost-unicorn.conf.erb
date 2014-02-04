@@ -45,7 +45,7 @@ server {
              application/atom+xml;
 
 
- client_max_body_size <%= @client_max_body_size %>;
+ client_max_body_size <%=scope['nginx::unicorn::client_max_body_size']%>;
 
   # Prefer to serve static files directly from nginx to avoid unnecessary
   # data copies from the application server.
