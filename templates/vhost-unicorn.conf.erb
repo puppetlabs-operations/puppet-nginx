@@ -13,9 +13,9 @@ upstream up_<%= appname %> {
   server <%= unicorn_upstream %> fail_timeout=0 max_fails=0;
 }
 
-<% if sslonly == true -%>
+<% if sslonly == true %>
     <%= scope.function_template(['nginx/vhost/_sslonly.conf.erb']) %>
-<% end -%>
+<% end %>
 
 
 server {
