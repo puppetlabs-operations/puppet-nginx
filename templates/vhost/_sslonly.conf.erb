@@ -1,5 +1,5 @@
 server {
-    listen 80;
-    server_name <%= servername %>;
+    listen <%= @port %>;
+    server_name <%= @servername %>;
     rewrite     ^ https://$server_name$request_uri? permanent;
 }
