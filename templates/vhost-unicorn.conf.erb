@@ -15,7 +15,7 @@ upstream up_<%= appname %> {
 
 <% if @sslonly -%>
     <%= scope.function_template(['nginx/vhost/_sslonly.conf.erb']) %>
-<% end %>
+<% end -%>
 
 
 server {
