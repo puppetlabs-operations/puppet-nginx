@@ -42,6 +42,7 @@ define nginx::vhost::proxy (
   $magic           = '',
   $isdefaultvhost  = false,
   $proxy           = true,
+  $sslonly         = false,
 ) {
 
   include nginx
