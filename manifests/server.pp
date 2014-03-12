@@ -51,5 +51,21 @@ class nginx::server (
       mode    => '0644',
       notify  => Service['nginx'],
       require => Package['nginx'];
+    '/var/log/nginx':
+      ensure  => directory,
+      owner   => $user,
+      group   => '0';
+    '/var/log/nginx/access.log':
+      ensure  => file,
+      owner   => $user,
+      group   => '0',
+      mode    => '0644',
+      replace => false;
+    '/var/log/nginx/error.log':
+      ensure  => file,
+      owner   => $user,
+      group   => '0',
+      mode    => '0644',
+      replace => false;
   }
 }
