@@ -26,8 +26,7 @@ server {
 
   root <%= rootpath %><% if gunicorn != true %>/public<% end %>;
 
-  access_log  /var/log/nginx/<%= srvname %>.access.log;
-  error_log   /var/log/nginx/<%= srvname %>.error.log;
+<%= scope.function_template(['nginx/vhost/_logging.conf.erb']) %>
 
 
   # tcp_nopush on; # off may be better for *some* Comet/long-poll stuff
@@ -66,6 +65,11 @@ server {
     #   http://en.wikipedia.org/wiki/X-Forwarded-For
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
+    # Real IP address of client.
+    # Note: could cause issues with rack-protection if X-Real-IP
+    # and X-Forwarded-For are not the same value. Will find out...
+    proxy_set_header X-Real-IP       $remote_addr;
+
     # enable this if and only if you use HTTPS, this helps Rack
     # set the proper protocol for doing redirects:
     # proxy_set_header X-Forwarded-Proto https;
@@ -78,6 +82,13 @@ server {
     # we don't want nginx trying to do something clever with
     # redirects, we set the Host: header above already.
     proxy_redirect off;
+
+<% if @ssl_verify_client -%>
+    proxy_set_header X-Client-Verify $ssl_client_verify;
+    proxy_set_header X-Client-DN     $ssl_client_s_dn;
+    proxy_set_header X-SSL-Subject   $ssl_client_s_dn;
+    proxy_set_header X-SSL-Issuer    $ssl_client_i_dn;
+<% end -%>
 
     # set "proxy_buffering off" *only* for Rainbows! when doing
     # Comet/long-poll/streaming.  It's also safe to set if you're using

@@ -9,22 +9,27 @@
 #
 define nginx::unicorn(
   $unicorn_socket,
-  $priority              = '10',
-  $template              = 'nginx/vhost-unicorn.conf.erb',
-  $servername            = '',
-  $path                  = '',
-  $auth                  = '',
-  $magic                 = '',
-  $port                  = 80,
-  $ssl                   = false,
-  $ssl_port              = '443',
-  $ssl_cert              = $nginx::server::default_ssl_cert,
-  $ssl_key               = $nginx::server::default_ssl_key,
-  $sslonly               = false,
-  $serveraliases         = undef,
-  $isdefaultvhost        = false,
-  $aliases               = {},
-  $gunicorn              = false
+  $priority           = '10',
+  $template           = 'nginx/vhost-unicorn.conf.erb',
+  $servername         = '',
+  $path               = '',
+  $auth               = '',
+  $magic              = '',
+  $port               = '80',
+  $ssl                = false,
+  $ssl_port           = '443',
+  $ssl_cert           = $nginx::server::default_ssl_cert,
+  $ssl_key            = $nginx::server::default_ssl_key,
+  $ssl_ca             = $nginx::server::default_ssl_ca,
+  $ssl_crl_path       = $nginx::server::default_ssl_crl_path,
+  $ssl_ciphers        = $nginx::server::default_ssl_ciphers,
+  $ssl_protocols      = $nginx::server::default_ssl_protocols,
+  $ssl_verify_client  = $nginx::server::default_ssl_verify_client,
+  $sslonly            = false,
+  $serveraliases      = undef,
+  $isdefaultvhost     = false,
+  $aliases            = {},
+  $gunicorn           = false
 ) {
 
   include nginx
