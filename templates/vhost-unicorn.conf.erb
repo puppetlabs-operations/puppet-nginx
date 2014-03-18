@@ -115,9 +115,8 @@ server {
 <% end -%>
 
     proxy_pass http://up_<%= appname %>;
+    <%= unicorn_magic %>
 
-  # Anything here is added by use of "magic" so is pretty jazzy.
-  <%= magic %>
   }
 
 <% unless aliases.empty? -%>
@@ -126,6 +125,9 @@ server {
   location <%= a %> { root <%= path %>; }
 <%   end -%>
 <% end -%>
+
+  # Anything here is added by use of "magic" so is pretty jazzy.
+  <%= magic %>
 
 }
 
