@@ -115,6 +115,9 @@ server {
 <% end -%>
 
     proxy_pass http://up_<%= appname %>;
+
+  # Anything here is added by use of "magic" so is pretty jazzy.
+  <%= magic %>
   }
 
 <% unless aliases.empty? -%>
@@ -124,7 +127,5 @@ server {
 <%   end -%>
 <% end -%>
 
-  # Anything here is added by use of "magic" so is pretty jazzy.
-  <%= magic %>
 }
 
