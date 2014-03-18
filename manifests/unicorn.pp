@@ -14,6 +14,7 @@ define nginx::unicorn(
   $servername         = '',
   $path               = '',
   $auth               = '',
+  $unicorn_magic      = '',
   $magic              = '',
   $port               = '80',
   $ssl                = false,
