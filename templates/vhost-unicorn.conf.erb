@@ -100,8 +100,6 @@ server {
     # per-response basis.
     # proxy_buffering off;
 
-    client_max_body_size  10m;
-
     # Crazed auth section:
 <% if auth['allowfrom'] != nil -%>
   satisfy any;
