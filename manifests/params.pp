@@ -14,8 +14,8 @@ class nginx::params {
 
   $server_names_hash_bucket_size = 32
 
-  $ssl_ciphers   = "HIGH:!aNULL:!MD5"
-  $ssl_protocols = "TLSv1.2 TLSv1.1 TLSv1 SSLv3"
+  $ssl_ciphers   = 'HIGH:!aNULL:!MD5'
+  $ssl_protocols = 'TLSv1.2 TLSv1.1 TLSv1 SSLv3'
 
   case $::operatingsystem {
     'debian',
