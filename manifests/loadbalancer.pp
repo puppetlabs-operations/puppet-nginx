@@ -31,6 +31,7 @@ define nginx::loadbalancer(
   $proto              = 'http',
   $magic              = '',  # Accept arbitrary template data to append to the vhost
   $locations          = '',
+  $rootlocation       = '',
   $isdefaultvhost     = true,
 ) {
 
