@@ -27,22 +27,24 @@
 #  class { 'nginx::cache': port => 80 , upstream_port 8080 }
 #
 define nginx::vhost::proxy (
-  $port            = '80',
-  $priority        = '10',
-  $template        = 'nginx/vhost-proxy.conf.erb',
-  $upstream_server = 'localhost',
-  $upstream_port   = '8080',
-  $servername      = '',
-  $serveraliases   = undef,
-  $ssl             = false,
-  $ssl_port        = '443',
-  $ssl_cert        = $nginx::server::default_ssl_cert,
-  $ssl_key         = $nginx::server::default_ssl_key,
-  $ssl_redirect    = false,
-  $magic           = '',
-  $isdefaultvhost  = false,
-  $proxy           = true,
-  $sslonly         = false,
+  $port                 = '80',
+  $priority             = '10',
+  $template             = 'nginx/vhost-proxy.conf.erb',
+  $upstream_server      = 'localhost',
+  $upstream_port        = '8080',
+  $servername           = '',
+  $serveraliases        = undef,
+  $ssl                  = false,
+  $ssl_port             = '443',
+  $ssl_cert             = $nginx::server::default_ssl_cert,
+  $ssl_key              = $nginx::server::default_ssl_key,
+  $ssl_redirect         = false,
+  $magic                = '',
+  $isdefaultvhost       = false,
+  $proxy                = true,
+  $sslonly              = false,
+  $client_max_body_size = '10m',
+
 ) {
 
   include nginx
