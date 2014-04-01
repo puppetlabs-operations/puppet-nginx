@@ -1,3 +1,4 @@
+
 upstream workers-<%= @name %> {
 <% @workers.each do |worker| -%>
   server <%= worker %> max_fails=<%= @max_fails %> fail_timeout=<%= @fail_timeout %>s;
@@ -11,7 +12,7 @@ upstream workers-<%= @name %> {
 }
 
 <% unless @caches.nil? or @caches.empty? -%>
-# Hack to add in additonal upstream for caching 
+# Hack to add in additonal upstream for caching
 upstream vcache_workers {
 <% @caches.each do |cache| -%>
   server <%= cache %>;
@@ -30,23 +31,17 @@ server {
 
   client_max_body_size  15m;
   <% unless @locations.nil? or @locations.empty? -%>
-  
-  # Add placeholder for additional nginx locations 
+
+  # Add placeholder for additional nginx locations
   <%= locations %>
 
 <% end -%>
   location / {
-    proxy_pass <%= @proto %>://workers-<%= @name %>;
-    proxy_redirect        off;
-    proxy_next_upstream   error timeout invalid_header http_500 http_502 http_503 http_504;
-    proxy_connect_timeout 20;
-    proxy_set_header      Host            $host;
-    proxy_set_header      X-Real-IP       $remote_addr;
-    proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header      X-Client-Verify $ssl_client_verify;
-    proxy_set_header      X-Client-DN     $ssl_client_s_dn;
-    proxy_set_header      X-SSL-Subject   $ssl_client_s_dn;
-    proxy_set_header      X-SSL-Issuer    $ssl_client_i_dn;
+<% if @rootlocation.nil? or @rootlocation.empty? -%>
+<%= scope.function_template(['nginx/vhost/_loadbalancing.conf.erb']) %>
+<% else %>
+<%= @rootlocation %>
+<% end -%>
   }
 
 <% unless @magic.nil? or @magic.empty? -%>
