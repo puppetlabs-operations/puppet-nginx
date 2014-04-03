@@ -29,7 +29,7 @@ server {
 # Define empty root dir for LB
   root /usr/share/empty;
 
-  client_max_body_size  15m;
+  client_max_body_size  128M;
   <% unless @locations.nil? or @locations.empty? -%>
 
   # Add placeholder for additional nginx locations
