@@ -26,6 +26,8 @@ server {
 
   root <%= rootpath %><% if gunicorn != true %>/public<% end %>;
 
+  client_max_body_size <%= @client_max_body_size %>;
+
 <%= scope.function_template(['nginx/vhost/_logging.conf.erb']) %>
 
 
