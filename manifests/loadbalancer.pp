@@ -33,6 +33,7 @@ define nginx::loadbalancer(
   $locations          = '',
   $rootlocation       = '',
   $isdefaultvhost     = true,
+  $ipv6only           = true,
 ) {
 
   include nginx
