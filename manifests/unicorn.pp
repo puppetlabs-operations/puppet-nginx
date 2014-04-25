@@ -29,6 +29,7 @@ define nginx::unicorn(
   $sslonly              = false,
   $serveraliases        = undef,
   $isdefaultvhost       = false,
+  $ipv6only             = true,
   $aliases              = {},
   $gunicorn             = false,
   $client_max_body_size = '15m',

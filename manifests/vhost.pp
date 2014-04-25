@@ -27,7 +27,8 @@ define nginx::vhost(
   $isdefaultvhost     = false,
   $vhostroot          = '',
   $autoindex          = false,
-  $webroot            = $nginx::server::default_webroot
+  $webroot            = $nginx::server::default_webroot,
+  $ipv6only           = false,
 ) {
 
   include nginx
