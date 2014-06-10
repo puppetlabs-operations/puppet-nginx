@@ -21,6 +21,7 @@ define nginx::vhost::redirect (
   $status         = 'permanent',
   $magic          = '',
   $isdefaultvhost = false,
+  $ipv6only       = false,
 ) {
 
   include nginx

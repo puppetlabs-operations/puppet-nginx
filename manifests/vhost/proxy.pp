@@ -44,7 +44,7 @@ define nginx::vhost::proxy (
   $proxy                = true,
   $sslonly              = false,
   $client_max_body_size = '10m',
-
+  $ipv6only             = false,
 ) {
 
   include nginx
