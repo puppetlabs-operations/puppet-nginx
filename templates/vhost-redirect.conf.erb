@@ -1,8 +1,6 @@
-# This vhost is managed by puppet, do not mess with it, terrible terrible things
-# will happen.
+# This vhost is managed by puppet, do not mess with it, terrible terrible
+# things will happen.
 #
-#
-
 server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
@@ -11,12 +9,12 @@ server {
 
   # Not sure if you want these for a mere redirector, but here they are.
   #
-  # access_log  /var/log/nginx/<%= srvname %>.access.log;
-  # error_log   /var/log/nginx/<%= srvname %>.error.log;
+  # access_log  /var/log/nginx/<%= @srvname %>.access.log;
+  # error_log   /var/log/nginx/<%= @srvname %>.error.log;
 
-  rewrite ^/(.*) <%= dest.chomp('/') %>/$1 <%=status%>;
+  rewrite ^/(.*) <%= dest.chomp('/') %>/$1 <%= @status %>;
 
   # Anything here is added by use of "magic" so is pretty jazzy.
-  <%= magic %>
+  <%= @magic %>
 }
 
