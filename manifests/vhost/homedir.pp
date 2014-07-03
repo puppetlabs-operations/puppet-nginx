@@ -21,6 +21,7 @@ define nginx::vhost::homedir (
   $isdefaultvhost = false,
   $homedir        = '/home',
   $pubdir         = 'public_html',
+  $ipv6only       = false,
 ) {
 
   include nginx
