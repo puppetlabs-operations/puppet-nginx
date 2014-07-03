@@ -26,7 +26,10 @@ server {
 
 <%= scope.function_template(['nginx/vhost/_listen.conf.erb']) %>
 
-# Define empty root dir for LB
+  # Use a custom log format which includes $upstream_addr
+  access_log /var/log/nginx/access.log load_balancer;
+
+  # Define empty root dir for LB
   root /usr/share/empty;
 
   client_max_body_size  15m;
