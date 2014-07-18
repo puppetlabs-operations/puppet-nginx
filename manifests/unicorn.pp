@@ -33,6 +33,7 @@ define nginx::unicorn(
   $aliases              = {},
   $gunicorn             = false,
   $client_max_body_size = '15m',
+  $cache_max_pattern    = undef,
 ) {
 
   include nginx
